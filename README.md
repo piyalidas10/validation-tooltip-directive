@@ -1,5 +1,12 @@
 # Validation-Directive-in-Angular-6
 
+## RUN Application
+
+```
+ng serve --port 4201
+http://localhost:4201
+```
+
 ## Mockdata
 validationerrors.json in assets folder
 
