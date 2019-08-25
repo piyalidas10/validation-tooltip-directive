@@ -1,0 +1,10 @@
+.registerBox {
+    background: #FFF;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .08);
+    border: 1px solid #eaeaea;
+    margin-top: 30px;
+    padding: 30px;
+  }
+  .registerBox h3{
+      margin-bottom: 30px;
+  }
