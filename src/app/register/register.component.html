@@ -1,42 +1,78 @@
+<div class="loader-bg" *ngIf="isLoading">
+  <div class="loader"></div>
+</div>
+
 <div class="container" *ngIf="!isLoading">
-  <div class="col-xl-6 offset-xl-3 col-md-10 offset-md-1 registerBox">
-    <h3 class="text-center">Register</h3>
+  <div class="col-xl-8 offset-xl-2 col-md-12 registerBox">
+    <h3 class="text-center">{{title}}</h3>
     <form [formGroup]="registerForm" (ngSubmit)="verifyForm()">
       <div class="row form-group clearfix">
             <div class="col-md-4 col-12">
               <label for="firstName">First Name</label>
-                <input type="text" appValidationLabel formControlName="firstName" class="form-control" />
+              <input type="text" appValidationLabel
+              id="{{formContent?.controls?.firstName}}"
+              [formControlName]="formContent?.controls?.firstName"
+              [formErrorsArr]="formErrorsArr"
+              [fieldInfo]="fieldInfoMsgArr?.firstName"
+              (formErrorsCount)='formErrorsEvent($event)'
+              class="form-control" autofocus />
             </div>
             <div class="col-md-4 col-12">
               <label for="middleName">Middle Name</label>
-                <input type="text" appValidationLabel formControlName="middleName" class="form-control" />
+                <input type="text" appValidationLabel
+                id="{{formContent?.controls?.middleName}}"
+                [formControlName]="formContent?.controls?.middleName"
+                [formErrorsArr]="formErrorsArr"
+                [fieldInfo]="fieldInfoMsgArr?.middleName"
+                (formErrorsCount)='formErrorsEvent($event)'
+                class="form-control" />
             </div>
             <div class="col-md-4 col-12">
               <label for="lastName">Last Name</label>
-                <input type="text" appValidationLabel formControlName="lastName" class="form-control" />
+                <input type="text" appValidationLabel
+                id="{{formContent?.controls?.lastName}}"
+                [formControlName]="formContent?.controls?.lastName"
+                [formErrorsArr]="formErrorsArr"
+                [fieldInfo]="fieldInfoMsgArr?.lastName"
+                (formErrorsCount)='formErrorsEvent($event)'
+                class="form-control" />
             </div>
       </div>      
       <div class="row form-group clearfix">
-        <label for="emailId" class="col-md-4 col-sm-5 col-12">Email ID</label>
-        <div class="col-md-8 col-sm-7 col-12">
-          <input type="text" appValidationLabel formControlName="emailId" class="form-control" />
-        </div>
-      </div>
-      <div class="row form-group clearfix">
-        <label for="mobile" class="col-md-4 col-sm-5 col-12">Mobile No</label>
-        <div class="col-md-8 col-sm-7 col-12">
-          <input type="text" appValidationLabel formControlName="mobile" class="form-control" />
-        </div>
-      </div>
-      <div class="row form-group clearfix">
-        <label for="umail" class="col-md-4 col-sm-5 col-12">Password</label>
-        <div class="col-md-8 col-sm-7 col-12">
-          <input type="password" appValidationLabel formControlName="password" class="form-control" />
-        </div>
+          <div class="col-md-4 col-12">
+            <label for="emailId">Email ID</label>
+              <input type="text" appValidationLabel
+              id="{{formContent?.controls?.emailId}}"
+              [formControlName]="formContent?.controls?.emailId"
+              [formErrorsArr]="formErrorsArr"
+              [fieldInfo]="fieldInfoMsgArr?.emailId"
+              (formErrorsCount)='formErrorsEvent($event)'
+              class="form-control" />
+          </div>    
+          <div class="col-md-4 col-12">
+            <label for="mobile">Mobile No</label>
+            <input type="text" appValidationLabel
+            id="{{formContent?.controls?.mobile}}"
+            [formControlName]="formContent?.controls?.mobile"
+            [formErrorsArr]="formErrorsArr"
+            [fieldInfo]="fieldInfoMsgArr?.mobile"
+            (formErrorsCount)='formErrorsEvent($event)'
+            class="form-control" />
+          </div> 
+          <div class="col-md-4 col-12">
+            <label for="umail">Password</label>
+            <input type="password" appValidationLabel
+            id="{{formContent?.controls?.password}}"
+            [formControlName]="formContent?.controls?.password"
+            [formErrorsArr]="formErrorsArr"
+            [fieldInfo]="fieldInfoMsgArr?.password"
+            (formErrorsCount)='formErrorsEvent($event)'
+            class="form-control" />
+          </div>  
       </div>
       <div class="row form-group clearfix">
         <div class="col-12 text-center">
-            <button class="btn btn-primary" type="submit" appFormSubmit>Register With Us</button>
+            <button class="btn btn-primary" type="submit" appFormSubmit>{{formContent?.btnName}}</button>
         </div>
       </div>  
     </form>

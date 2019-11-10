@@ -1,0 +1,13 @@
+.globalError{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: #ffffff;
+    text-align: center;
+}
+.globalError p{
+    margin: 10px 0;
+}
+.globalError p a{
+    font-weight: bold;
+}

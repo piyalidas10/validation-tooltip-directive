@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, EventEmitter, Output, Renderer2 } from '@angular/core';
 import { ApiService } from '../api.service';
 import { ValidationMessageService } from '../validation-msg.service';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
@@ -11,17 +11,42 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 export class RegisterComponent implements OnInit {
   isLoading: Boolean = true;
   registerForm: FormGroup;
+  formContent = {};
+  formErrorsArr = [];
+  title: String;
+  fieldInfoMsgArr = [];
+  errors: any;
+  isFieldExit = false;
+  @Output() formErrorsCount: EventEmitter<any> = new EventEmitter();
 
   constructor(
     private formBuilder: FormBuilder,
     private apiService: ApiService,
     private validErrorMsgService: ValidationMessageService,
-    private el: ElementRef
-  ) { }
+    private el: ElementRef,
+    private ren: Renderer2
+  ) {
+  }
 
   ngOnInit() {
-    this.createForm();
+    this.title = 'Register';
+    this.formContentFunc();
     this.validationErrorMsg();
+  }
+
+  formContentFunc() {
+    this.apiService.getFormContent().then(
+      (res) => {
+        console.log(res);
+        if (res !== undefined || res !== null) {
+          this.formContent = res;
+          this.isLoading = false;
+          this.createForm();
+        }
+      }, (error) => {
+        console.log(error);
+        this.isLoading = false;
+      });
   }
 
   createForm() {
@@ -35,30 +60,48 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  verifyForm() {
-    const invalidElements = this.el.nativeElement.querySelectorAll('.form-control.ng-invalid');
-    if (invalidElements.length > 0) {
-      invalidElements[0].focus();
-    } else {
-      console.log('Registration details => ', this.registerForm.value);
-    }
-  }
-
   /*
   *** Get API response as validation error json and load response in validationErrorObj of validErrorMsgService
   */
  validationErrorMsg() {
-  this.apiService.getValidationErrorMessage().then(
+  this.apiService.getFieldInfoMessage().then(
     (res) => {
       if (this.validErrorMsgService.validationErrorObj.length === 0) {
-        this.validErrorMsgService.validationErrorObj = res['validationErrors'];
-        console.log('Validation Error => ', this.validErrorMsgService.validationErrorObj);
+        this.fieldInfoMsgArr = res['fieldInfo'];
+        console.log('Field Info Array => ', this.fieldInfoMsgArr);
         this.isLoading = false;
       }
     }, (error) => {
       console.log(error);
       this.isLoading = false;
     });
-}
+  }
+
+  formErrorsEvent(evt) {
+    this.errors = evt;
+  }
+
+  verifyForm() {
+    const cloneErrors = this.errors;
+    Object.keys(this.registerForm.controls).forEach(key => {
+      if (this.registerForm.get(key).invalid) {
+        this.el.nativeElement.querySelector('#' + key).classList.add('errorfield');
+        this.el.nativeElement.querySelector('#' + key).parentElement.querySelector('label').classList.add('errorlabel');
+        const obj = {fieldName: key};
+        if (cloneErrors.length > 0) {
+          for (let i = 0; i < cloneErrors.length; i++) {
+            if (cloneErrors[i].fieldName === key) {
+              this.isFieldExit = true;
+            }
+          }
+        }
+        if (!this.isFieldExit) {
+          this.errors.push(obj);
+        }
+      }
+      this.isFieldExit = false;
+    });
+    this.formErrorsCount.emit(this.errors);
+  }
 
 }

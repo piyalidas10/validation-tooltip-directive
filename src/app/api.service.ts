@@ -10,13 +10,32 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-   /**
-   * Get Form validation error message
+/**
+   * Get Form content
   */
- getValidationErrorMessage() {
+ getFormContent() {
   // tslint:disable-next-line:no-shadowed-variable
  const promise = new Promise((resolve, reject) => {
-   const apiURL = 'http://localhost:4201/assets/validationerrors.json';
+   const apiURL = 'http://localhost:4200/assets/formcontent.json';
+   return this.http.get<{frcontent: any}>(apiURL).toPromise().then(
+     res => {
+       resolve(res);
+     },
+     msg => {
+       reject(msg);
+     }
+   );
+ });
+ return promise;
+}
+
+   /**
+   * Get Field Info message
+  */
+ getFieldInfoMessage() {
+  // tslint:disable-next-line:no-shadowed-variable
+ const promise = new Promise((resolve, reject) => {
+   const apiURL = 'http://localhost:4200/assets/fieldInfoContent.json';
    return this.http.get<{vlderrors: any}>(apiURL).toPromise().then(
      res => {
        resolve(res);

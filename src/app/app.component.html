@@ -1,3 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<app-register></app-register>
+<div class="globalError" *ngIf="isGlobalError">
+    <p>To register, please fill up <a href="javascript:void(0);" (click)="goToField()">{{errorsObj.length}}</a> fields.</p>
+</div>
+<app-register (formErrorsCount)='formErrorsEvent($event)'></app-register>
 
