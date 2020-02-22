@@ -8,6 +8,7 @@
 # dependencies
 /node_modules
 
+
 # IDEs and editors
 /.idea
 .project
@@ -33,6 +34,8 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+*.webm
+*.vlc
 
 # System Files
 .DS_Store

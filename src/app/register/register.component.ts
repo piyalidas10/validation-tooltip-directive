@@ -83,6 +83,7 @@ export class RegisterComponent implements OnInit {
 
   verifyForm() {
     const cloneErrors = this.errors;
+    console.log(this.registerForm.controls);
     Object.keys(this.registerForm.controls).forEach(key => {
       if (this.registerForm.get(key).invalid) {
         this.el.nativeElement.querySelector('#' + key).classList.add('errorfield');

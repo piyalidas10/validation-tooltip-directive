@@ -5,6 +5,11 @@
     background: #ffffff;
     text-align: center;
 }
+.globalError:focus {
+    border: #4d91d8 1px solid;
+    box-shadow: 0 0 0 2px #4d91d8;
+    outline: none;
+}
 .globalError p{
     margin: 10px 0;
 }
